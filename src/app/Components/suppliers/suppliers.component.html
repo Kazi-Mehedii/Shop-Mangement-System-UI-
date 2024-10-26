@@ -1,0 +1,67 @@
+<div class=" container mt-4">
+    <h2 class="text-center">Manage Suppliers</h2>
+
+    <!-- Supplier Form -->
+   <div class="mt-2">
+    <h3>{{selectedSupplier ? 'UpdateSupplier' : 'Add New Supplier'}}</h3>
+    <form [formGroup]="supplierForm" (ngSubmit)="selectedSupplier ? updateSupplier()  : addSupplier()">
+
+        <div class="mb-3 form-group">
+            <label for="name">Supplier Name</label>
+            <input type="text" id="name" class="form-control" formControlName="name" required>
+            @if (supplierForm.get('name')?.invalid && supplierForm.get('name')?.touched) {
+                <div class="text-danger">
+                    Name Required
+                </div>
+            }
+        </div>
+
+
+        <div class="mb-3 form-group">
+            <label for="contactInfo">Contact Info</label>
+            <input type="text" id="contactInfo" class="form-control" formControlName="contactInfo" required>
+            @if (supplierForm.get('contactInfo')?.invalid && supplierForm.get('contactInfo')?.touched) {
+                <div class="text-danger">
+                    Contact No Required
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="supplierForm.invalid">{{selectedSupplier ? 'Update' : 'Add New'}}</button>
+
+    </form>
+   </div>
+
+   <div class="mt-2">  
+    <h3 class="mt-4 text-center">Supplier List</h3>
+    <table class="table table-striped mr-4">
+        <thead>
+            <tr>
+                <th>Supplier Name</th>
+                <th>Supplier Contact No</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (item of suppliers; track $index) {
+                <tr>
+                    <td>
+                        {{item.name}}
+                    </td>
+                    <td>
+                        {{item.contactInfo}}
+                    </td>
+                   <td>
+                    <button (click)="selectSupplier(item)" class="btn btn-info  me-2 ">Edit</button>
+                    <button (click)="deleteSupplier(item.id)" class="btn btn-danger ">Delete Item</button>
+                   </td>
+                </tr>
+            }
+        </tbody>
+        
+    </table>
+   </div>
+
+</div>
+

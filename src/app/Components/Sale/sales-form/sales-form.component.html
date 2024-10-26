@@ -1,0 +1,148 @@
+<div class="container mt-4">
+  <form [formGroup]="saleForm" (ngSubmit)="submitSale()">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="saleDate">Sale Date:</label>
+        <input
+          type="date"
+          id="saleDate"
+          formControlName="saleDate"
+          class="form-control"
+        />
+        @if (saleForm.get('saleDate')?.invalid &&
+        saleForm.get('saleDate')?.touched) {
+        <div class="text-danger">Date Required</div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="saleInvoiceNo">Invoice No:</label>
+        <input
+          type="text"
+          id="saleInvoiceNo"
+          formControlName="saleInvoiceNo"
+          class="form-control"
+        />
+        @if (saleForm.get('saleInvoiceNo')?.invalid &&
+        saleForm.get('saleInvoiceNo')?.touched) {
+        <div class="text-danger">Invoice No Required</div>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div formArrayName="saleItems">
+        @for (item of saleItems.controls; track $index) {
+        <div [formGroupName]="$index">
+          <div class="row">
+            <div class="col">
+              <label>Product Name</label>
+              <select formControlName="productId" class="form-control">
+                <option>Select Product</option>
+                @for (item of products; track $index) {
+                <option [value]="item.id">{{ item.productName }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col">
+              <label>Quantity:</label>
+              <input
+                type="number"
+                formControlName="quantity"
+                class="form-control"
+                (change)="claculateTotal($index)"
+              />
+            </div>
+
+            <div class="col">
+              <label>Price:</label>
+              <input
+                type="number"
+                formControlName="price"
+                class="form-control"
+                (change)="claculateTotal($index)"
+              />
+            </div>
+
+            <div class="col">
+              <label>Total Amount:</label>
+              <input
+                type="number"
+                formControlName="totalAmount"
+                class="form-control"
+                readonly
+              />
+            </div>
+
+            <div class="col mt-4">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="removeProduct($index)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary mt-3" (click)="addProducts()">
+      Add Product
+    </button>
+    <button
+      type="submit"
+      class="btn btn-success mt-3"
+      [disabled]="saleForm.invalid"
+    >
+      Submit Sale
+    </button>
+  </form>
+
+  <!-- Print Invoice Button -->
+<div class="mt-5">
+  <button class="btn btn-info " (click)="printCashMemo()">
+    Print Invoice
+  </button>
+
+  <a class="btn btn-success text-end" [routerLink]="['/sale/List']">
+    Go To Sale List
+  </a> 
+
+</div>
+
+  <!-- Hidden invoice for printing -->
+
+  <!-- Hidden invoice for printing -->
+  <!-- <div id="memoslip" style="display: none">
+    <h3>Invoice</h3>
+    <p>Date: {{ saleForm.value.saleDate }}</p>
+    <p>Invoice No: {{ saleForm.value.saleInvoiceNo }}</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of saleForm.value.saleItems; track $index) {
+        <tr>
+          <td>{{ getProductrName(item.productId) }}</td>
+   
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.totalAmount }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div> -->
+         <!-- <td>{{ (item.productId) }}</td> -->
+
+</div>

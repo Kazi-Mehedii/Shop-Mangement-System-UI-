@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <h2>Reports With Revenue</h2>
+
+  <div class="form-group">
+    <label for="reportType">Select Report Type</label>
+    <select
+      id="reportType"
+      class="form-control"
+      [(ngModel)]="reportType"
+      (change)="onReportTypeChange(reportType)"
+    >
+      <option value="daily">Daily Report</option>
+      <option value="monthly">Monthly Report</option>
+      <option value="yearly">Yearly Report</option>
+    </select>
+  </div>
+
+  @if (reports.length>0){
+  <table class="table table-bordered mt-4">
+    <thead>
+      <tr>
+        <!-- <th>Date</th> -->
+        <th>Product Name</th>
+        <th>Quantity Sold</th>
+        <th>Quantity Purchased</th>
+        <th>Total Sale Amount</th>
+        <th>Total Purchased Amount</th>
+        <th>Revenue</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (report of reports; track $index) {
+      <tr>
+        <!-- <td>{{report.dateTime | date}}</td> -->
+        <td>{{ report.productName }}</td>
+        <td>{{ report.quantitySold }}</td>
+        <td>{{ report.quantityPurchased }}</td>
+        <td>{{ report.totalSalse }}</td>
+        <td>{{ report.totalPurchases }}</td>
+        <td>{{ report.revenue }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+  @else {
+    <div>
+        <p>No reports available for the selected period.</p>
+    </div>
+  }
+
+  
+</div>

@@ -1,0 +1,48 @@
+<div class="container mt-4">
+    <h2 class="text-center">Purchase List</h2>
+
+    <!-- Button to add new purchase -->
+    <div class="text-end mb-3">
+        <a class="btn btn-success" [routerLink]="['/purchases/new']">
+            Add New Purchase
+        </a>
+    </div>
+
+    <!-- Purchases Table -->
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Supplier Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Purchase Date</th>
+                <th>Purchase Memo No</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (item of purchase; track $index) {
+            <tr>
+                <td>{{ getProductName(item.productId) }}</td>
+                <td>{{ getSupplierName(item.supplierId) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unitPrice }}</td>
+                <td>{{ item.totalPrice }}</td>
+                <td>{{ item.purchaseDate | date: 'dd-MM-yyyy' }}</td>
+                <td>{{item.purcaseMemoNo}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-2" (click)="editPurchase(item.id)">
+                        Update
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="deletePurchase(item.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

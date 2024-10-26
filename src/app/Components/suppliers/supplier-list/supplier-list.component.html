@@ -1,0 +1,47 @@
+
+<div class="container mt-4 text-center">
+    <h2 class="text-center">Supplier List</h2>
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by  SuppLier Name"
+        [(ngModel)] = "searchSupplierName" (input)="filterSupplier()"
+        />         
+       </div>
+
+    <!-- Button to add new purchase -->
+    <div class="text-end mb-3">
+        <a class="btn btn-success" [routerLink]="['/supplier/new']">
+            Add New Supplier
+        </a>
+    </div>
+
+    <!-- Purchases Table -->
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Supplier Name</th>
+                <th>Supplier Contact</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (item of filterdsupplier; track $index) {
+            <tr>
+                
+                <td>{{ item.name }}</td>
+                <td>{{ item.contactInfo }}</td>
+              
+                <td>
+                    <button class="btn btn-primary btn-sm me-3" (click)="editSupplier(item.id)">
+                        Update
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteSupplier(item.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,81 @@
+<div class="container mt-4">
+  <h2 class="text-center">Sales List</h2>
+
+  <!-- Search input field use inovice no -->
+   <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search by Invoice No"
+    [(ngModel)] = "searchInvoiceNo" (input)="filterSalse()"
+    />
+        
+   </div>
+
+  <div class="text-end mb-3">
+    <a class="btn btn-success" [routerLink]="['/sale/new']"> Add New Sale </a>
+  </div>
+
+  <table class="table table-bordered table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Sale Date</th>
+        <th>Invoice No</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total Amount</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (sale of filteredSales; track $index) {
+      <tr>
+        <td>{{ sale.saleDate | date: 'dd-MM-yyyy'}}</td>
+        <td>{{ sale.saleInvoiceNo }}</td>
+        
+        <td>
+          <ul class="list-unstyled mb-0">
+            @for (item of sale.saleItems; track $index) { 
+              <li>{{getProductrName(item.productId)}}</li>
+          }
+          </ul>
+        </td>
+
+        <td>
+        <ul class="list-unstyled mb-0">
+          @for (item of sale.saleItems; track $index) { 
+            <li>
+              {{item.quantity}}
+            </li>
+        }
+        </ul>
+      </td>
+
+        <td>
+          <ul class="list-unstyled mb-0">
+            @for (item of sale.saleItems; track $index) { 
+             <li>
+              {{item.price}}
+             </li>
+          }
+          </ul>
+        </td>
+
+        <td>
+          <ul class="list-unstyled mb-0">
+            @for (item of sale.saleItems; track $index) { 
+              <li>
+                {{item.totalAmount}}
+              </li>
+          }
+          </ul>
+        </td>
+
+        <td>
+            <button class="btn btn-primary btn-sm ms-3 me-3" (click)="editSale(sale.id)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteSale(sale.id)">Delete Sale</button>
+        </td>
+
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,113 @@
+<div class="container mt-4">
+  <h2 class="text-center">
+    {{ selectedPurchas ? "Update Purchase" : "New Purchase" }}
+  </h2>
+
+  <form [formGroup]="purchaseForm" (ngSubmit)="selectedPurchas ? updatePurchase() : addPurchase()">
+    <div class="row">
+      <!-- Product Select -->
+      <div class="col-md-6 mb-3">
+        <label for="productId" class="form-label">Product Name</label>
+        <select formControlName="productId" id="productId" class="form-control">
+          <option>Select A Product</option>
+          @for (item of products; track $index) {
+          <option [value]="item.id">{{ item.productName }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Supplier Select -->
+      <div class="col-md-6 mb-3">
+        <label for="supplierId" class="form-label">Supplier Name</label>
+        <select
+          formControlName="supplierId"
+          id="supplierId"
+          class="form-control"
+        >
+          <option>Select A Product</option>
+          @for (item of suppliers; track $index) {
+          <option [value]="item.id">{{ item.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Quantity -->
+      <div class="col-md-6 mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input
+          type="number"
+          id="quantity"
+          formControlName="quantity"
+          class="form-control"
+        />
+        @if ( purchaseForm.get('quantity')?.invalid &&
+        purchaseForm.get('quantity')?.touched) {
+        <div class="text-danger">Quantity Required</div>
+        }
+      </div>
+
+      <!-- Unit Price -->
+      <div class="col-md-6 mb-3">
+        <label for="unitPrice" class="form-label">Unit Price</label>
+        <input
+          type="number"
+          id="unitPrice"
+          formControlName="unitPrice"
+          class="form-control"
+        />
+        @if ( purchaseForm.get('unitPrice')?.invalid &&
+        purchaseForm.get('unitPrice')?.touched) {
+        <div class="text-danger">Unit Price Required</div>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Purchase Date -->
+      <div class="col-md-6 mb-3">
+        <label for="purchaseDate" class="form-label">Purchase Date</label>
+        <input
+          type="date"
+          id="purchaseDate"
+          formControlName="purchaseDate"
+          class="form-control"
+        />
+        @if ( purchaseForm.get('purchaseDate')?.invalid &&
+        purchaseForm.get('purchaseDate')?.touched) {
+        <div class="text-danger">Purchase Date Required</div>
+        }
+      </div>
+
+      <!-- Memo No -->
+      <div class="col-md-6 mb-3">
+        <label for="purchaseMemoNo" class="form-label">Purchase Memo No</label>
+        <input
+          type="text"
+          id="purcaseMemoNo"
+          formControlName="purcaseMemoNo"
+          class="form-control"
+        />
+        @if ( purchaseForm.get('purcaseMemoNo')?.invalid &&
+        purchaseForm.get('purcaseMemoNo')?.touched) {
+        <div class="text-danger">Please Submit Memo Number</div>
+        }
+      </div>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary">
+        {{ selectedPurchas ? "Update" : "Add New" }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Button to go to purchase list -->
+  <div class="mb-3">
+    <a class="btn btn-success" [routerLink]="['/purchases/List']">
+      Go To Purchase List
+    </a>
+  </div>
+
+</div>
